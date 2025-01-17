@@ -66,19 +66,25 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
+app.post('/api/getuser', async (req, res) => {
+    const { userid } = req.body;
+    try {
+        const result = await pool.query('SELECT * FROM users where id = $1', [userid]);
+        res.json(result.rows);
+    } catch (error) {
+        logger.info(`error when getting User ${$error.message}`)
+        res.status(400).json({ error: error.message });
+    }
+});
+
 app.post('/api/tickets', async (req, res) => {
     const { user_id, title, description, status, created_at, companyid, categoryid, subcategoryid, substateid, priorityid, incidenttypeid, domainid, updated_at , shortdesc} = req.body;
-    
+    const queryString = `INSERT INTO tickets (user_id,title,description,status,created_at,companyid,categoryid,subcategoryid,substateid,priorityid,incidenttypeid,domainid,updated_at,shortdesc) VALUES (${user_id},'Ticket Contingencia','${description}','${status}',CURRENT_TIMESTAMP,${companyid},${categoryid},${subcategoryid},${substateid},${priorityid},${incidenttypeid},${domainid},CURRENT_TIMESTAMP,'${shortdesc}')`;
     try 
     {
-        const result = await pool.query(
-//            'INSERT INTO tickets (user_id, title, description) VALUES ($1, $2, $3) RETURNING *',
-            'INSERT INTO tickets (user_id, title, description, status, created_at, companyid, categoryid, subcategoryid, substateid, priorityid, incidenttypeid, domainid, updated_at, shortdesc) VALUES($1, $2, $3, $4, CURRENT_TIMESTAMP, $5, $6, $7, $8, $9, $10, $11, CURRENT_TIMESTAMP, $12) RETURNING *'
-            [user_id, title, description, status, companyid, categoryid, subcategoryid, substateid, priorityid, incidenttypeid, domainid, shortdesc]
-        );
+        const result = await pool.query(queryString);
         res.status(201).json(result.rows[0]);
         logger.info(`ticket insert ok `);
-        
     } 
     catch (error) {
         logger.info(`error when add ticket ${error.message}`);
