@@ -6,7 +6,6 @@ const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const morgan = require('morgan');
 const logger = require('./logger');
-
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -30,7 +29,6 @@ const pool = new Pool({
 app.post('/api/register', async (req, res) => {
     const { username, password, email } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
-
     try {
         const result = await pool.query(
             'INSERT INTO users (username, password, email) VALUES ($1, $2, $3) RETURNING *',
@@ -50,12 +48,12 @@ app.post('/api/login', async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
         if (result.rows.length === 0) {
-        logger.info(`User not found ${username}`);
+            logger.info(`User not found ${username}`);
             return res.status(401).json({ message: 'Credenciales inválidas' });
         }
 
         if (password !== result.rows[0].password) {
-        logger.info(`wrong password for ${username}`);
+            logger.info(`wrong password for ${username}`);
             return res.status(401).json({ message: 'Credenciales inválidas' });
         }
 
