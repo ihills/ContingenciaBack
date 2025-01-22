@@ -76,8 +76,9 @@ app.post('/api/getuser', async (req, res) => {
 });
 
 app.post('/api/tickets', async (req, res) => {
-    const { user_id, title, description, status, created_at, companyid, categoryid, subcategoryid, substateid, priorityid, incidenttypeid, domainid, updated_at , shortdesc} = req.body;
-    const queryString = `INSERT INTO tickets (user_id,title,description,status,created_at,companyid,categoryid,subcategoryid,substateid,priorityid,incidenttypeid,domainid,updated_at,shortdesc) VALUES (${user_id},'Ticket Contingencia','${description}','${status}',CURRENT_TIMESTAMP,${companyid},${categoryid},${subcategoryid},${substateid},${priorityid},${incidenttypeid},${domainid},CURRENT_TIMESTAMP,'${shortdesc}')`;
+
+    const { user_id, title, description, status, created_at, companyid, categoryid, subcategoryid, substateid, priorityid, incidenttypeid, domainid, updated_at , shortdesc, cat_id,planned_for,contact_type,applicant,planned_rut,planned_email,planned_charge, phone_number} = req.body;
+    const queryString = `INSERT INTO tickets (user_id,title,description,status,created_at,companyid,categoryid,subcategoryid,substateid,priorityid,incidenttypeid,domainid,updated_at,shortdesc, cat_id,planned_for,contact_type,applicant,planned_rut,planned_email,planned_charge, phone_number) VALUES (${user_id},'Ticket Contingencia','${description}','${status}',CURRENT_TIMESTAMP, ${companyid},${categoryid},${subcategoryid},${substateid},${priorityid},${incidenttypeid},${domainid},CURRENT_TIMESTAMP,'${shortdesc}',${cat_id},'${planned_for}','${contact_type}','${applicant}','${planned_rut}','${planned_email}', '${planned_charge}', '${phone_number}')`;
     try 
     {
         const result = await pool.query(queryString);
@@ -171,6 +172,17 @@ app.get('/api/priority', async (req, res) => {
     }
 });
 
+app.get('/api/catalogue', async (req, res) => {
+    try {
+        const result = await pool.query('SELECT * FROM catalogue');
+        res.json(result.rows);
+    } catch (error) {
+        logger.info(`error when get priority ${$error.message}`)
+        res.status(400).json({ error: error.message });
+    }
+});
+
+
 app.use((err, req, res, next) => {
     logger.error(`Server error: ${err.message}`);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -179,3 +191,4 @@ app.use((err, req, res, next) => {
 app.listen(port, () => {
     console.log(`Service Running at port : ${port}`);
 });
+
