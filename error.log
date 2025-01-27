@@ -5,3 +5,8 @@
 {"level":"error","message":"Server error: Unexpected token '1', \"1\" is not valid JSON","timestamp":"2025-01-16T18:17:13.902Z"}
 {"level":"error","message":"Server error: Unexpected token '1', \"1\" is not valid JSON","timestamp":"2025-01-16T18:18:31.749Z"}
 {"level":"error","message":"Server error: Unexpected token '1', \"1\" is not valid JSON","timestamp":"2025-01-16T18:18:51.865Z"}
+{"level":"error","message":"Error al iniciar sesión: generateToken is not defined","timestamp":"2025-01-23T13:05:23.746Z"}
+{"level":"error","message":"Error al iniciar sesión: generateToken is not defined","timestamp":"2025-01-23T13:06:05.972Z"}
+{"level":"error","message":"Server error: Expected property name or '}' in JSON at position 1 (line 1 column 2)","timestamp":"2025-01-26T02:50:37.660Z"}
+{"level":"error","message":"Server error: Unexpected token ''', ...\"_number\": '13061315-\"... is not valid JSON","timestamp":"2025-01-26T02:50:50.476Z"}
+{"level":"error","message":"Server error: Expected property name or '}' in JSON at position 1 (line 1 column 2)","timestamp":"2025-01-27T14:38:29.151Z"}
