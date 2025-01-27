@@ -20,7 +20,7 @@ app.use(morgan('combined', {
 }));
 
 const pool = new Pool({
-    user: 'postgres',u
+    user: 'postgres',
     host: 'localhost',
     database: 'postgres',
     password: 'nico1401',
